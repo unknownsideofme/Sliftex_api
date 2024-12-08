@@ -11,13 +11,10 @@ import json
 
 #read csv
 
-data = pd.read_csv('./api2/phonatics.csv')
+data = pd.read_csv('./api/phonatics.csv')
 
 # clean and remove stopwords
 
-nltk.download('stopwords' )
-nltk.download('punkt' )
-nltk.download('punkt_tab' )
 
 
 # Get English stopwords
