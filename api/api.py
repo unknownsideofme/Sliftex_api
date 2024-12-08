@@ -2,9 +2,9 @@ from dotenv import load_dotenv
 import os
 from langchain_ollama.embeddings import OllamaEmbeddings
 from langchain_groq import ChatGroq
-from api2.semantic_search import semantic_search
-from api2.phonatics_search import phonatic_search
-from api2.suggestions import calc_suggestions
+from api.semantic_search import semantic_search
+from api.phonatics_search import phonatic_search
+from api.suggestions import calc_suggestions
 from fastapi import FastAPI
 import uvicorn
 from pydantic import BaseModel
