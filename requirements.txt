@@ -1,0 +1,16 @@
+langchain
+langchain-ollama
+langchain-core
+langchain-community
+python-dotenv
+transformers
+pandas
+FastAPI
+uvicorn
+datasets
+langchain-openai
+nltk
+langchain-groq
+metaphone
+pinecone-client
+rapidfuzz
