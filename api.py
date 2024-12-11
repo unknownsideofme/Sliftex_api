@@ -11,6 +11,7 @@ import uvicorn
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import json
+from update import add_title
  
 
 # Load environment variables
@@ -19,9 +20,7 @@ api_key = os.getenv("GROQ_API_KEY")
 if api_key is None:
     raise ValueError("API Key not set. Please set the OPENAI_API_KEY environment variable.")
 
-openai_api_key = os.getenv("OPENAI_API_KEY")
 
-llm2 = ChatOpenAI(api_key=openai_api_key, model="gpt-3.5-turbo")
 
 langsmith_api_key = os.getenv("langsmith_api_key")
 
@@ -147,10 +146,15 @@ def search_title(title_input: TitleInput):
         res = remove_newlines(res)
         return  res
 
-if __name__ == "__main__":
-    uvicorn.run(app)
+
     
 
 @app.post("/sliftex/update")
-def update():
-    return "Update successful"
+def update(title_input: TitleInput):
+    title= title_input.title
+    return (add_title(title))
+    
+
+
+if __name__ == "__main__":
+    uvicorn.run(app)

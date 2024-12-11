@@ -21,7 +21,7 @@ index_semantic = "llama"
 indexsemantic = pc.Index(index_semantic)
 
 #embed the query
-embed_model = OllamaEmbeddings(model="llama3.2")
+embed_model = OllamaEmbeddings(model="llama3.2") 
 
 
 
