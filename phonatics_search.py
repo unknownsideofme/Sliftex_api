@@ -11,7 +11,7 @@ import json
 
 #read csv
 
-data = pd.read_csv('./api2/phonatics.csv')
+data = pd.read_csv('./phonatics.csv')
 
 # clean and remove stopwords
 

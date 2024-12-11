@@ -81,7 +81,7 @@ def convert_documents_to_json(documents):
 
 
 #creating pinecone retriever
-encoded_docs = BM25Encoder().load("./api2/document.json")
+encoded_docs = BM25Encoder().load("./document.json")
 retriever = PineconeHybridSearchRetriever(index=indexsemantic, sparse_encoder=encoded_docs, embeddings=embed_model , top_k = 20 , alpha = 0.95)
 
 

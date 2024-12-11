@@ -3,9 +3,9 @@ import os
 from langchain_ollama.embeddings import OllamaEmbeddings
 from langchain_groq import ChatGroq
 from langchain_openai import ChatOpenAI
-from api2.semantic_search import semantic_search
-from api2.phonatics_search import phonatic_search
-from api2.suggestions import calc_suggestions
+from semantic_search import semantic_search
+from phonatics_search import phonatic_search
+from suggestions import calc_suggestions
 from fastapi import FastAPI
 import uvicorn
 from pydantic import BaseModel
@@ -131,18 +131,21 @@ def get_top_15(json_data):
 
 def search_title(title_input: TitleInput):
     title= title_input.title
-    response_semantic = semantic_search(title)
-    top_15_semantic = get_top_15(response_semantic)
-    
-    response_phonatic = phonatic_search(title)
-    top_15_phonatic = get_top_15(response_phonatic)
-    res = json.dumps( {"semantic_search": top_15_semantic, "phonatic_search": top_15_phonatic})
-    res = remove_newlines(res)
-    suggest = calc_suggestions(res, title, llm)
-    suggest = remove_newlines(json.dumps(suggest))
-    res = json.dumps( {"semantic_search": response_semantic, "phonatic_search": response_phonatic, "suggestions": suggest})
-    res = remove_newlines(res)
-    return  res
+    if check_disallowed_words(title):
+        return {"error": "The title contains disallowed words."}
+    else :
+        response_semantic = semantic_search(title)
+        top_15_semantic = get_top_15(response_semantic)
+        
+        response_phonatic = phonatic_search(title)
+        top_15_phonatic = get_top_15(response_phonatic)
+        res = json.dumps( {"semantic_search": top_15_semantic, "phonatic_search": top_15_phonatic})
+        res = remove_newlines(res)
+        suggest = calc_suggestions(res, title, llm)
+        suggest = remove_newlines(json.dumps(suggest))
+        res = json.dumps( {"semantic_search": response_semantic, "phonatic_search": response_phonatic, "suggestions": suggest})
+        res = remove_newlines(res)
+        return  res
 
 if __name__ == "__main__":
     uvicorn.run(app)
