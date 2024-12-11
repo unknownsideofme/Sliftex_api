@@ -54,7 +54,7 @@ app.add_middleware(
 
 #disallowed words
 
-disallowed_words = ["Police", "Crime", "Corruption", "CBI", "Army"]
+disallowed_words = ["police", "crime", "corruption", "cbi", "army"]
 
 def check_disallowed_words(title: str) -> bool:
     """
@@ -67,7 +67,7 @@ def check_disallowed_words(title: str) -> bool:
     bool: True if the title contains disallowed words, False otherwise.
     """
     for word in disallowed_words:
-        if word.lower() in title:
+        if word.lower() in title.lower():
             return True
     return False
 
