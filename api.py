@@ -2,9 +2,10 @@ from dotenv import load_dotenv
 import os
 from langchain_ollama.embeddings import OllamaEmbeddings
 from langchain_groq import ChatGroq
-from api.semantic_search import semantic_search
-from api.phonatics_search import phonatic_search
-from api.suggestions import calc_suggestions
+from langchain_openai import ChatOpenAI
+from api2.semantic_search import semantic_search
+from api2.phonatics_search import phonatic_search
+from api2.suggestions import calc_suggestions
 from fastapi import FastAPI
 import uvicorn
 from pydantic import BaseModel
@@ -17,6 +18,10 @@ load_dotenv()
 api_key = os.getenv("GROQ_API_KEY")
 if api_key is None:
     raise ValueError("API Key not set. Please set the OPENAI_API_KEY environment variable.")
+
+openai_api_key = os.getenv("OPENAI_API_KEY")
+
+llm2 = ChatOpenAI(api_key=openai_api_key, model="gpt-3.5-turbo")
 
 langsmith_api_key = os.getenv("langsmith_api_key")
 
@@ -141,3 +146,8 @@ def search_title(title_input: TitleInput):
 
 if __name__ == "__main__":
     uvicorn.run(app)
+    
+
+@app.post("/sliftex/update")
+def update():
+    return "Update successful"

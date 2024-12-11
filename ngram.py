@@ -11,11 +11,12 @@ import json
 
 #read csv
 
-data = pd.read_csv('./api/phonatics.csv')
+data = pd.read_csv('./api2/phonatics.csv')
 
 # clean and remove stopwords
 
-
+nltk.download('stopwords' )
+nltk.download('punkt' )
 
 # Get English stopwords
 stop_words = set(stopwords.words('english'))
@@ -55,16 +56,27 @@ def find_double_metaphone_matches(input_metaphoneA, input_metaphoneB, data, thre
     return matches
 
 
-def format_to_json(matches):
+import json
 
+def format_to_json(matches):
+    # Sort matches by the maximum similarity score in descending order
+    sorted_matches = sorted(
+        matches,
+        key=lambda match: max(match["similarity_score_A"], match["similarity_score_B"]),
+        reverse=True
+    )
+
+    # Prepare the output dictionary
     formatted_output = {"similar titles": {}}
 
-    for match in matches:
+    for match in sorted_matches:
         formatted_output["similar titles"][match["title"]] = {
             "score": max(match["similarity_score_A"], match["similarity_score_B"])
         }
 
+    # Return the formatted JSON
     return json.dumps(formatted_output, indent=4)
+
 
 def phonatic_search(title):
     title = clean_text(title)
