@@ -1,5 +1,4 @@
 langchain
-langchain-ollama
 langchain-core
 langchain-community
 python-dotenv
@@ -14,3 +13,5 @@ langchain-groq
 metaphone
 pinecone-client
 rapidfuzz
+langchain-ollama
+pinecone-text
